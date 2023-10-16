@@ -14,6 +14,8 @@ These Python scripts rely on the following dependencies:
 * PyTorch with CUDA/GPU capability enabled
 * Pre-labelled radar data test sets and examples of noise, contained in an HDF5 file, for radar facilities of interest. This data is archived on Zenodo (doi: 10.5281/zenodo.10005351) as a tar.gz archive, and its contents must be extracted into the root directory with the Python scripts.
 
+## Getting started
+
 The following steps will run the CNN method to generate results similar to those presented in the paper. Note that each script has its own settings/parameters at the end of the script (after all classes or functions are defined) that must be modified approprately.
 
 1. Within augment_noise_examples.py, change the facility_str variable to the facility of interest ("RISR-N", "MHO", or "JRO"), and run the script. This uses the ~2000 clutter/noise examples provided in a facility's noise_examples_small.h5 file to generate ~20000 (or more) examples of clutter/noise, by taking linear combinations of examples and translating them arbitrarily as described in the paper. This step is necessary to run the generateSyntheticRadarDataDoubles.py file which generates training examples.
@@ -28,75 +30,75 @@ Note: In the paper results, the test sets for RISR-N and MHO include all of the 
 
 
 
-Descriptions of each included Python script are as follows:
+## Descriptions of each included Python script are as follows:
 
 
-ablation_sim.py:
+**ablation_sim.py:**
 
 Contains helper function (the exponential trajectory function) used to generate synthetic head echoes.
 
 
-augment_noise_examples.py:
+**augment_noise_examples.py:**
 
 Script that uses the small amount of clutter/noise examples provided in a facility's noise_examples_small.h5 file to generate a large amount of examples of clutter/noise, by taking linear combinations of examples and translating them arbitrarily as described in the paper. 
 
 
-CEDAR2019_params_simple.py:
+**CEDAR2019_params_simple.py:**
 
 Contains experiment parameters such as pulse code and frequencies for the experiments at all three facilities from the CEDAR 2019 concurrent data collect.
 
 
-cnn_simple.py:
+**cnn_simple.py:**
 
 Script that trains the CNN on synthetic head echoes and tests the CNN on real head echoes.
 
 
-createCAM.py:
+**createCAM.py:**
 
 Script that generates class activation maps that demonstrate what parts of the image the CNN considers important in making its decision for test examples.
 
 
-gather_clutter_examples.py:
+**gather_clutter_examples.py:**
 
 File that contains helper functions for gather_noise_examples.py.
 
 
-gather_noise_examples.py:
+**gather_noise_examples.py:**
 
 Python script that grabs pre-labelled examples of noise from a test set (labelled via a non-zero integer in the attribute "clutter" on an example) and puts them in a separate HDF5. This script is not needed to simply recreate results.
 
 
-generateSyntheticRadarDataDoubles.py:
+**generateSyntheticRadarDataDoubles.py:**
 
 Script that generates synthetic head echoes, combines them with examples of clutter/noise from real data, and puts them into an HDF5 file as a training set. The "doubles" refers to the fact that adjacent training examples are with/without a synthetic head echo but have the same background noise/clutter.
 
 
-get_false_neg_rate_vs_snr.py:
+**get_false_neg_rate_vs_snr.py:**
 
 Contains helper function to generate sensitivity metrics above and below an SNR threshold.
 
 
-label_data.py:
+**label_data.py:**
 
 Adds "label" as an attribute to every example in an HDF5 file, and labels each example from data in a CSV. This script is not needed to simply recreate results.
 
 
-load_data.py:
+**load_data.py:**
 
 Helper functions to load HDF5 training and test sets for the CNN.
 
 
-mfAlgs_simple.py:
+**mfAlgs_simple.py:**
 
 Helper functions to perform matched filtering on raw data and generate plots such as RTIs.
 
 
-postpro_cnn_results.py:
+**postpro_cnn_results.py:**
 
 Helper functions to postprocess CNN results and performance metrics.
 
 
-split_data.py:
+**split_data.py:**
 
 Script that takes HDF5 containing large segment of rawdata and splits it into smaller segments interpreted by the CNN. This script is not needed to simply recreate results.
 
